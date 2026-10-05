@@ -1,0 +1,893 @@
+```html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Représentants des parents d'élèves</title>
+
+  <style>
+    :root {
+      --primary: #3b6ea5;
+      --primary-dark: #2d5785;
+      --secondary: #f3f7fb;
+      --accent: #f5b942;
+      --text: #263238;
+      --muted: #68757d;
+      --white: #ffffff;
+      --border: #dce5ec;
+      --success: #2e7d32;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                   Helvetica, Arial, sans-serif;
+      color: var(--text);
+      background: #f7f9fb;
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    /* ---------- HEADER ---------- */
+
+    header {
+      background: linear-gradient(135deg, var(--primary), #5f91c5);
+      color: white;
+      text-align: center;
+      padding: 55px 20px 70px;
+    }
+
+    header .emoji {
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
+
+    header h1 {
+      margin: 0 auto 12px;
+      font-size: clamp(2rem, 5vw, 3rem);
+      line-height: 1.2;
+    }
+
+    header p {
+      max-width: 700px;
+      margin: 0 auto;
+      font-size: 1.1rem;
+      opacity: 0.95;
+    }
+
+    /* ---------- CONTAINER ---------- */
+
+    .container {
+      width: min(1100px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    /* ---------- SECTION ---------- */
+
+    section {
+      padding: 55px 0;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .section-title h2 {
+      margin: 0 0 8px;
+      font-size: 2rem;
+      color: var(--primary-dark);
+    }
+
+    .section-title p {
+      margin: 0 auto;
+      max-width: 700px;
+      color: var(--muted);
+    }
+
+    /* ---------- PRESENTATION ---------- */
+
+    .presentation {
+      margin-top: -35px;
+      position: relative;
+    }
+
+    .presentation-intro {
+      background: white;
+      border-radius: 18px;
+      padding: 30px;
+      box-shadow: 0 8px 30px rgba(40, 70, 100, 0.10);
+      text-align: center;
+      max-width: 850px;
+      margin: 0 auto;
+    }
+
+    .presentation-intro p {
+      margin: 0;
+      font-size: 1.05rem;
+    }
+
+    /* ---------- PARENTS ---------- */
+
+    .parents-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 18px;
+    }
+
+    .parent-card {
+      background: white;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 5px 20px rgba(40, 70, 100, 0.08);
+      text-align: center;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .parent-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 28px rgba(40, 70, 100, 0.14);
+    }
+
+    .parent-photo {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      display: block;
+      background: #e9f0f6;
+    }
+
+    .parent-info {
+      padding: 18px 12px 20px;
+    }
+
+    .parent-info h3 {
+      margin: 0;
+      font-size: 1.15rem;
+      color: var(--primary-dark);
+    }
+
+    .parent-info p {
+      margin: 5px 0 0;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    /* ---------- ACTUALITE ---------- */
+
+    .news-section {
+      background: white;
+    }
+
+    .news-card {
+      max-width: 850px;
+      margin: 0 auto;
+      background: var(--secondary);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 35px;
+      text-align: center;
+    }
+
+    .news-icon {
+      font-size: 2.8rem;
+      margin-bottom: 10px;
+    }
+
+    .news-card h3 {
+      margin: 0 0 10px;
+      color: var(--primary-dark);
+      font-size: 1.5rem;
+    }
+
+    .news-card p {
+      color: var(--muted);
+      margin: 0 auto 25px;
+      max-width: 650px;
+    }
+
+    .button {
+      display: inline-block;
+      text-decoration: none;
+      border-radius: 10px;
+      padding: 13px 22px;
+      font-weight: 600;
+      transition: 0.2s ease;
+    }
+
+    .button-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .button-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+
+    /* ---------- FORMULAIRE ---------- */
+
+    .form-section {
+      padding-top: 65px;
+    }
+
+    .form-card {
+      max-width: 760px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 20px;
+      padding: 35px;
+      box-shadow: 0 8px 30px rgba(40, 70, 100, 0.10);
+    }
+
+    .form-intro {
+      background: #f8fbfd;
+      border-left: 4px solid var(--primary);
+      padding: 16px 18px;
+      border-radius: 8px;
+      margin-bottom: 28px;
+      color: #46545d;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      font-weight: 600;
+    }
+
+    .optional {
+      color: var(--muted);
+      font-size: 0.85rem;
+      font-weight: normal;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 13px 14px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      font: inherit;
+      color: var(--text);
+      background: white;
+      margin-bottom: 20px;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(59, 110, 165, 0.12);
+    }
+
+    textarea {
+      min-height: 180px;
+      resize: vertical;
+    }
+
+    .privacy-note {
+      font-size: 0.9rem;
+      color: var(--muted);
+      background: #fffaf0;
+      border: 1px solid #f2dfad;
+      padding: 14px 16px;
+      border-radius: 9px;
+      margin-bottom: 22px;
+    }
+
+    button[type="submit"] {
+      width: 100%;
+      border: 0;
+      border-radius: 10px;
+      padding: 14px 20px;
+      background: var(--primary);
+      color: white;
+      font: inherit;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    button[type="submit"]:hover {
+      background: var(--primary-dark);
+    }
+
+    button[type="submit"]:disabled {
+      opacity: 0.6;
+      cursor: wait;
+    }
+
+    #status {
+      margin-top: 18px;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .success {
+      color: var(--success);
+    }
+
+    .error {
+      color: #b3261e;
+    }
+
+    /* ---------- FOOTER ---------- */
+
+    footer {
+      text-align: center;
+      padding: 35px 20px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    /* ---------- ANTI-SPAM ---------- */
+
+    .honeypot {
+      position: absolute;
+      left: -9999px;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+
+    @media (max-width: 900px) {
+      .parents-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      header {
+        padding: 40px 18px 55px;
+      }
+
+      section {
+        padding: 40px 0;
+      }
+
+      .parents-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+
+      .presentation-intro,
+      .form-card,
+      .news-card {
+        padding: 24px 20px;
+      }
+
+      .parent-info {
+        padding: 13px 8px 15px;
+      }
+
+      .parent-info h3 {
+        font-size: 1rem;
+      }
+
+      .parent-info p {
+        font-size: 0.8rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- =========================================================
+       EN-TÊTE
+       ========================================================= -->
+
+  <header>
+    <div class="emoji">🏫</div>
+
+    <h1>Les représentants des parents d'élèves</h1>
+
+    <p>
+      À votre écoute pour échanger, partager vos questions,
+      remarques et suggestions concernant la vie de l'école.
+    </p>
+  </header>
+
+
+  <!-- =========================================================
+       PRÉSENTATION
+       ========================================================= -->
+
+  <section class="presentation">
+    <div class="container">
+
+      <div class="presentation-intro">
+        <p>
+          Nous sommes les représentants des parents d'élèves de l'école maternelle des 3 maisons.
+          Notre rôle est de faire le lien entre les familles et l'école,
+          et de porter la voix des parents.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =========================================================
+       LES 5 PARENTS
+       ========================================================= -->
+
+  <section>
+    <div class="container">
+
+      <div class="section-title">
+        <h2>Qui sommes-nous ?</h2>
+
+        <p>
+          Nous sommes cinq parents bénévoles à votre disposition
+          pour échanger avec vous.
+        </p>
+      </div>
+
+
+      <div class="parents-grid">
+
+        <!-- HUGUES -->
+        <div class="parent-card">
+
+          <!-- REMPLACER L'URL CI-DESSOUS PAR LA PHOTO DE HUGUES -->
+          <img
+            class="parent-photo"
+            src="https://placehold.co/500x500?text=Hugues"
+            alt="Photo de Hugues"
+          >
+
+          <div class="parent-info">
+            <h3>Hugues</h3>
+            <p>Représentant des parents</p>
+          </div>
+
+        </div>
+
+
+        <!-- ALICE -->
+        <div class="parent-card">
+
+          <!-- REMPLACER L'URL CI-DESSOUS PAR LA PHOTO D'ALICE -->
+          <img
+            class="parent-photo"
+            src="https://placehold.co/500x500?text=Alice"
+            alt="Photo d'Alice"
+          >
+
+          <div class="parent-info">
+            <h3>Alice</h3>
+            <p>Représentante des parents</p>
+          </div>
+
+        </div>
+
+
+        <!-- MARIE -->
+        <div class="parent-card">
+
+          <!-- REMPLACER L'URL CI-DESSOUS PAR LA PHOTO DE MARIE -->
+          <img
+            class="parent-photo"
+            src="https://placehold.co/500x500?text=Marie"
+            alt="Photo de Marie"
+          >
+
+          <div class="parent-info">
+            <h3>Marie</h3>
+            <p>Représentante des parents</p>
+          </div>
+
+        </div>
+
+
+        <!-- MICHEL -->
+        <div class="parent-card">
+
+          <!-- REMPLACER L'URL CI-DESSOUS PAR LA PHOTO DE MICHEL -->
+          <img
+            class="parent-photo"
+            src="https://placehold.co/500x500?text=Michel"
+            alt="Photo de Michel"
+          >
+
+          <div class="parent-info">
+            <h3>Michel</h3>
+            <p>Représentant des parents</p>
+          </div>
+
+        </div>
+
+
+        <!-- LÉON -->
+        <div class="parent-card">
+
+          <!-- REMPLACER L'URL CI-DESSOUS PAR LA PHOTO DE LÉON -->
+          <img
+            class="parent-photo"
+            src="https://placehold.co/500x500?text=L%C3%A9on"
+            alt="Photo de Léon"
+          >
+
+          <div class="parent-info">
+            <h3>Léon</h3>
+            <p>Représentant des parents</p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =========================================================
+       FIL D'ACTUALITÉ
+       ========================================================= -->
+
+  <section class="news-section">
+
+    <div class="container">
+
+      <div class="section-title">
+        <h2>Notre actualité</h2>
+
+        <p>
+          Retrouvez ici les dernières informations,
+          actualités et événements de l'association.
+        </p>
+      </div>
+
+
+      <div class="news-card">
+
+        <div class="news-icon">📰</div>
+
+        <h3>Suivez-nous !</h3>
+
+        <p>
+          Pour ne rien manquer de nos actions et des informations
+          importantes pour les familles, retrouvez notre fil d'actualité.
+        </p>
+
+        <!-- =====================================================
+             REMPLACER L'URL CI-DESSOUS PAR LE LIEN DE VOTRE
+             FIL D'ACTUALITÉ
+             ===================================================== -->
+
+        <a
+          class="button button-primary"
+          href="https://VOTRE-LIEN-ACTUALITE.fr"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Voir notre actualité
+        </a>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================================================
+       FORMULAIRE
+       ========================================================= -->
+
+  <section class="form-section">
+
+    <div class="container">
+
+      <div class="section-title">
+
+        <h2>Nous contacter</h2>
+
+        <p>
+          Une question, une remarque ou une suggestion ?
+          Écrivez-nous.
+        </p>
+
+      </div>
+
+
+      <div class="form-card">
+
+        <div class="form-intro">
+
+          <strong>Votre message peut rester anonyme.</strong><br>
+
+          Les informations personnelles sont facultatives.
+          Vous pouvez choisir d'envoyer votre message à l'ensemble
+          des représentants ou à une personne en particulier.
+
+        </div>
+
+
+        <form id="contactForm">
+
+          <!-- NOM -->
+
+          <label for="name">
+            Nom / prénom
+            <span class="optional">(facultatif)</span>
+          </label>
+
+          <input
+            type="text"
+            id="name"
+            name="name"
+            autocomplete="name"
+            placeholder="Votre nom et prénom"
+          >
+
+
+          <!-- EMAIL -->
+
+          <label for="email">
+            E-mail
+            <span class="optional">(facultatif)</span>
+          </label>
+
+          <input
+            type="email"
+            id="email"
+            name="email"
+            autocomplete="email"
+            placeholder="votre@email.fr"
+          >
+
+
+          <!-- TELEPHONE -->
+
+          <label for="phone">
+            Téléphone
+            <span class="optional">(facultatif)</span>
+          </label>
+
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            autocomplete="tel"
+            placeholder="Votre numéro de téléphone"
+          >
+
+
+          <!-- DESTINATAIRE -->
+
+          <label for="recipient">
+            À qui souhaitez-vous envoyer votre message ?
+          </label>
+
+          <select id="recipient" name="recipient" required>
+
+            <option value="">
+              -- Choisissez un destinataire --
+            </option>
+
+            <option value="all">
+              Tous les représentants
+            </option>
+
+            <option value="Hugues">
+              Hugues
+            </option>
+
+            <option value="Alice">
+              Alice
+            </option>
+
+            <option value="Marie">
+              Marie
+            </option>
+
+            <option value="Michel">
+              Michel
+            </option>
+
+            <option value="Léon">
+              Léon
+            </option>
+
+          </select>
+
+
+          <!-- MESSAGE -->
+
+          <label for="message">
+            Votre message
+          </label>
+
+          <textarea
+            id="message"
+            name="message"
+            required
+            placeholder="Votre question, remarque ou suggestion..."
+          ></textarea>
+
+
+          <div class="privacy-note">
+            🔒 <strong>Confidentialité :</strong>
+            vous pouvez envoyer votre message sans indiquer
+            votre nom, votre e-mail ou votre téléphone.
+          </div>
+
+
+          <!-- HONEYPOT ANTI-SPAM -->
+
+          <div class="honeypot">
+            <label for="website">Ne pas remplir ce champ</label>
+
+            <input
+              type="text"
+              id="website"
+              name="website"
+              tabindex="-1"
+              autocomplete="off"
+            >
+          </div>
+
+
+          <!-- BOUTON -->
+
+          <button type="submit" id="submitButton">
+            Envoyer mon message
+          </button>
+
+
+          <div id="status"></div>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================================================
+       PIED DE PAGE
+       ========================================================= -->
+
+  <footer>
+
+    <div class="container">
+
+      <p>
+        Représentants des parents d'élèves
+      </p>
+
+      <p>
+        Un espace d'écoute, d'échange et de dialogue pour les familles.
+      </p>
+
+    </div>
+
+  </footer>
+
+
+  <!-- =========================================================
+       JAVASCRIPT
+       ========================================================= -->
+
+  <script>
+
+    /*
+     * ==========================================================
+     * IMPORTANT :
+     * COLLER ICI L'URL DE VOTRE WEB APP GOOGLE APPS SCRIPT
+     * ==========================================================
+     */
+
+    const SCRIPT_URL =
+      "COLLEZ_ICI_L_URL_DE_VOTRE_WEB_APP";
+
+
+    const form = document.getElementById("contactForm");
+    const button = document.getElementById("submitButton");
+    const status = document.getElementById("status");
+
+
+    form.addEventListener("submit", async function(event) {
+
+      event.preventDefault();
+
+      status.textContent = "";
+      status.className = "";
+
+      button.disabled = true;
+      button.textContent = "Envoi en cours…";
+
+
+      const data = {
+
+        name: document.getElementById("name").value.trim(),
+
+        email: document.getElementById("email").value.trim(),
+
+        phone: document.getElementById("phone").value.trim(),
+
+        recipient: document.getElementById("recipient").value,
+
+        message: document.getElementById("message").value.trim(),
+
+        website: document.getElementById("website").value.trim()
+
+      };
+
+
+      try {
+
+        const response = await fetch(
+          SCRIPT_URL,
+          {
+            method: "POST",
+
+            headers: {
+              "Content-Type": "text/plain;charset=utf-8"
+            },
+
+            body: JSON.stringify(data)
+          }
+        );
+
+
+        const result = await response.json();
+
+
+        if (result.ok) {
+
+          status.textContent =
+            "✓ Votre message a bien été envoyé. Merci !";
+
+          status.className = "success";
+
+          form.reset();
+
+        } else {
+
+          throw new Error(
+            result.error || "Erreur lors de l'envoi."
+          );
+
+        }
+
+      } catch (error) {
+
+        console.error(error);
+
+        status.textContent =
+          "Une erreur est survenue. Votre message n'a pas pu être envoyé.";
+
+        status.className = "error";
+
+      }
+
+
+      button.disabled = false;
+      button.textContent = "Envoyer mon message";
+
+    });
+
+  </script>
+
+</body>
+</html>
+```

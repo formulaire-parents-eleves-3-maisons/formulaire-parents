@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contacter les représentants des parents d'élèves</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f4f6f8;
+      color: #263238;
+      line-height: 1.5;
+    }
+    .container {
+      width: min(680px, calc(100% - 32px));
+      margin: 40px auto;
+    }
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 8px 30px rgba(0,0,0,.08);
+    }
+    h1 {
+      margin-top: 0;
+      font-size: 1.6rem;
+      line-height: 1.25;
+    }
+    .intro {
+      background: #f0f4f8;
+      border-radius: 10px;
+      padding: 18px;
+      margin-bottom: 28px;
+    }
+    label {
+      display: block;
+      font-weight: 650;
+      margin: 18px 0 7px;
+    }
+    .optional {
+      font-weight: 400;
+      color: #667;
+      font-size: .9rem;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 13px 14px;
+      border: 1px solid #c9d0d6;
+      border-radius: 9px;
+      font: inherit;
+      background: white;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: 2px solid #9bbde0;
+      border-color: #5b8db8;
+    }
+    textarea {
+      min-height: 220px;
+      resize: vertical;
+    }
+    button {
+      width: 100%;
+      margin-top: 24px;
+      padding: 14px 18px;
+      border: 0;
+      border-radius: 9px;
+      background: #315f85;
+      color: white;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    button:hover { background: #284f70; }
+    button:disabled { opacity: .65; cursor: wait; }
+    .note {
+      margin-top: 14px;
+      font-size: .88rem;
+      color: #667;
+    }
+    .success, .error {
+      display: none;
+      margin-top: 18px;
+      padding: 14px;
+      border-radius: 9px;
+    }
+    .success { background: #e7f5ea; color: #1d6b32; }
+    .error { background: #fdecec; color: #9b2226; }
+    @media (max-width: 520px) {
+      .container { width: calc(100% - 20px); margin: 20px auto; }
+      .card { padding: 22px 18px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <section class="card">
+      <h1>Contacter les représentants des parents d'élèves</h1>
+
+      <div class="intro">
+        <strong>Nous sommes les représentants des parents d'élèves de l'école maternelle des 3 maisons.</strong>
+        Pour toute question, remarque, suggestion, n'hésitez pas à nous écrire ici.
+        Vous pouvez choisir d'envoyer votre commentaire à tous ou à l'un d'entre nous seulement
+        et vous pouvez, si vous le souhaitez, rester anonyme.
+      </div>
+
+      <form id="contactForm">
+        <label for="name">Nom / prénom <span class="optional">(facultatif)</span></label>
+        <input type="text" id="name" name="name" autocomplete="name">
+
+        <label for="email">Adresse e-mail <span class="optional">(facultatif)</span></label>
+        <input type="email" id="email" name="email" autocomplete="email">
+
+        <label for="phone">Téléphone <span class="optional">(facultatif)</span></label>
+        <input type="tel" id="phone" name="phone" autocomplete="tel">
+
+        <label for="recipient">Envoyer à</label>
+        <select id="recipient" name="recipient" required>
+          <option value="all">Tous les représentants</option>
+          <option value="Hugues">Hugues, papa de Basile classe de Mme Vecchi</option>
+	    <option value="Léon">Eléonore, maman de Lucie, classe de Mme Rolin</option>
+          <option value="Alice">Alice, maman de Gabriel, classe de Mme Walin</option>
+          <option value="Marie">Marie, maman de Paul, classe de Mmes Derrien et Mietkiewicz </option>
+          <option value="Michel">Miguel, papa d'Emilia, classe de Mmes Derrien et Mietkiewicz </option>
+          
+        </select>
+
+        <label for="message">Votre question, remarque ou suggestion</label>
+        <textarea id="message" name="message" required placeholder="Écrivez votre message ici..."></textarea>
+
+        <!-- Anti-spam simple : ce champ doit rester vide -->
+        <input type="text" name="website" id="website" tabindex="-1" autocomplete="off"
+               style="position:absolute;left:-9999px" aria-hidden="true">
+
+        <button type="submit" id="submitButton">Envoyer le message</button>
+
+        <div class="note">
+          Les champs nom, e-mail et téléphone sont facultatifs. Vous pouvez donc envoyer
+          votre message anonymement.
+        </div>
+
+        <div class="success" id="successMessage">
+          Votre message a bien été envoyé. Merci !
+        </div>
+        <div class="error" id="errorMessage">
+          Une erreur est survenue. Merci de réessayer dans quelques instants.
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <script>
+    // Remplacez cette URL après avoir publié le script Google Apps Script.
+    const SCRIPT_URL = "COLLEZ_ICI_L_URL_DE_VOTRE_WEB_APP";
+
+    const form = document.getElementById("contactForm");
+    const button = document.getElementById("submitButton");
+    const success = document.getElementById("successMessage");
+    const error = document.getElementById("errorMessage");
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      success.style.display = "none";
+      error.style.display = "none";
+
+      if (SCRIPT_URL.includes("COLLEZ_ICI")) {
+        error.textContent = "Le formulaire n'est pas encore configuré. L'URL du service d'envoi doit être ajoutée.";
+        error.style.display = "block";
+        return;
+      }
+
+      if (document.getElementById("website").value !== "") return;
+
+      button.disabled = true;
+      button.textContent = "Envoi en cours…";
+
+      const data = {
+        name: document.getElementById("name").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        phone: document.getElementById("phone").value.trim(),
+        recipient: document.getElementById("recipient").value,
+        message: document.getElementById("message").value.trim()
+      };
+
+      try {
+        await fetch(SCRIPT_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(data)
+        });
+
+        form.reset();
+        success.style.display = "block";
+      } catch (e) {
+        error.style.display = "block";
+      } finally {
+        button.disabled = false;
+        button.textContent = "Envoyer le message";
+      }
+    });
+  </script>
+</body>
+</html>
